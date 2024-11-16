@@ -3,37 +3,33 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yonuma <yonuma@student.42.fr>              +#+  +:+       +#+         #
+#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/01 14:19:47 by yonuma            #+#    #+#              #
-#    Updated: 2024/11/07 21:40:55 by yonuma           ###   ########.fr        #
+#    Updated: 2024/11/16 11:47:39 by marvin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = cc
-CFLAGS = -Wall -Wextra -Werror
-NAME = so_long.a
-SRCS = main.c
-# BONUS = 
-	   
-OBJS = $(SRCS:.c=.o)
-OBJS_B = $(BONUS:.c=.o)
-# INCLUDES = -I includes
+# minilibx_test
+NAME		=	minilibx_test
+SRCS		=	main.c
+OBJS 		=	$(SRCS:.c=.o)
+# Compiler
+CC			=	cc
+LIBX_FLAGS	=	-lmlx_Linux -lXext -lX11
 
-all : $(NAME)
+# Rules
+all:		$(NAME)
 
-# bonus : 
-# 	@make all "OBJS = $(OBJS) $(OBJS_B)"
+$(NAME):	$(OBJS)
+			$(CC) $(OBJS) $(LIBX_FLAGS) -o $(NAME)
 
-$(NAME): $(SRCS)
-	make -C libmlx
-	$(CC) $(SRCS) -lXext -lX11 libmlx/libmlx_Linux.a libmlx/libmlx.a -lm -lz
+clean:
+			$(RM) $(OBJS)
 
-clean : 
-	rm -f $(OBJS) $(OBJS_B)
+fclean:		clean
+			$(RM) $(NAME)
 
-fclean : clean
-	rm -f $(NAME)
+re:			fclean all
 
-re : fclean all
-.PHONY : all clean fclean re
+.PHONY:		all clean fclean re
