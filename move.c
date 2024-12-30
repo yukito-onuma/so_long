@@ -12,7 +12,7 @@
 
 # include "so_long.h"
 
-void move_a(struct map *map)
+void move_a(t_map *map)
 {
     int x;
     int y;
@@ -38,7 +38,7 @@ void move_a(struct map *map)
     }
 }
 
-void move_d(struct map *map)
+void move_d(t_map *map)
 {
     int x;
     int y;
@@ -64,7 +64,7 @@ void move_d(struct map *map)
     }
 }
 
-void move_w(struct map *map)
+void move_w(t_map *map)
 {
     int x;
     int y;
@@ -90,7 +90,7 @@ void move_w(struct map *map)
     }
 }
 
-void move_s(struct map *map)
+void move_s(t_map *map)
 {
     int x;
     int y;

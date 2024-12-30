@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: yonuma <yonuma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 17:46:56 by marvin            #+#    #+#             */
-/*   Updated: 2024/12/20 23:26:50 by marvin           ###   ########.fr       */
+/*   Updated: 2024/12/30 21:00:44 by yonuma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	handle_keypress(int keycode, struct map *struct_map)
+int	handle_keypress(int keycode, t_map *struct_map)
 {
 	if (keycode == XK_Escape)
 		exit(0);

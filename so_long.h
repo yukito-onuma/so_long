@@ -20,7 +20,7 @@
 #include <string.h>
 #include "libmlx/mlx.h"
 
-struct texture
+typedef struct texture
 {
     void *img_0;
     void *img_1;
@@ -34,7 +34,7 @@ struct texture
     int img_height;
 } texture;
 
-struct map
+typedef struct map
 {
     char **map;
     void *mlx;
@@ -43,7 +43,7 @@ struct map
     int height;
     int is_invalid;
     struct texture texture;
-} map;
+} t_map;
 
 // move
 void    move_a(struct map *map);
