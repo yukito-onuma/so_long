@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yonuma <yonuma@student.42.fr>              +#+  +:+       +#+        */
+/*   By: su_yu_ <su_yu_@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 17:46:56 by marvin            #+#    #+#             */
-/*   Updated: 2024/12/30 21:00:44 by yonuma           ###   ########.fr       */
+/*   Updated: 2025/01/04 18:48:28 by su_yu_           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ int	check_map_inclument(struct map *map_struct)
 	is_C = 0;
 	width = map_struct->width;
 	height = map_struct->height;
-	printf("%d\n", __LINE__);
 	while (height)
 	{
 		width = map_struct->width;
@@ -126,10 +125,9 @@ int	check_map_inclument(struct map *map_struct)
 		}
 		height--;
 	}
-	printf("is_E: %d, is_P: %d, is_C: %d\n", is_E, is_P, is_C);
 	if (is_E == 0 || is_P == 0 || is_C == 0)
 	{
-		fprintf(stderr, "Error: Map is invalid\n");
+		fprintf(stderr, "Error: Map is invalid\n"); // 出力注意
 		map_struct->is_invalid = 1;
 		return (-1);
 	}
@@ -204,19 +202,17 @@ int	main(void)
 		fprintf(stderr, "Error initializing MLX\n");
 		return (1);
 	}
-	map_struct.win = mlx_new_window(map_struct.mlx, win_width, win_height, "Display Image");
 	if (map_struct.win == NULL)
 	{
 		fprintf(stderr, "Error creating window\n");
 		return (1);
 	}
-	printf("%d\n", __LINE__);
 	map_struct.texture = set_tecture();
-	printf("%d\n", __LINE__);
+	map_struct.win = mlx_new_window(map_struct.mlx, win_width, win_height, "Display Image");
 	read_map(&map_struct); // マップになんの要素を持たせるか検討
-	printf("%d\n", __LINE__);
 	if (map_struct.is_invalid == 1)
 		return (print_error(&map_struct));
+	printf("map.texture.image_width: %d, map.texture.image_height: %d\n", map_struct.texture.img_width, map_struct.texture.img_height);
 	mlx_hook(map_struct.win, KeyPress, KeyPressMask, handle_keypress, &map_struct);
 	mlx_loop_hook(map_struct.mlx, draw_map, &map_struct);
 	mlx_loop(map_struct.mlx);

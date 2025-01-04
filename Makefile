@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yonuma <yonuma@student.42.fr>              +#+  +:+       +#+         #
+#    By: su_yu_ <su_yu_@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/01 14:19:47 by yonuma            #+#    #+#              #
-#    Updated: 2024/12/30 21:16:19 by yonuma           ###   ########.fr        #
+#    Updated: 2025/01/04 18:40:14 by su_yu_           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ SRCS		=	main.c \
 OBJS 		=	$(SRCS:.c=.o)
 # Compiler
 CC			=	cc
-LIBX_FLAGS	=	-lXext -lX11 libmlx/libmlx_Linux.a libmlx/libmlx.a -lm -lz
+# LIBX_FLAGS	=	-lXext -lX11 libmlx/libmlx_Linux.a libmlx/libmlx.a -lm -lz
+LIBX_FLAGS	=	libmlx/libmlx_Linux.a libmlx/libmlx.a -lXext -lX11 -lm -lz
 
 # Rules
 all:		$(NAME)
