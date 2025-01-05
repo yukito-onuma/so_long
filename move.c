@@ -25,7 +25,8 @@ void move_a(t_map *map)
         {
             if (map->map[y][x] == 'P')
             {
-                if (x > 0 && (map->map[y][x - 1] == '0' || map->map[y][x - 1] == 'C'))
+                if (x > 0 && (map->map[y][x - 1] == '0'
+                    || map->map[y][x - 1] == 'C' || map->map[y][x - 1] == 'E'))
                 {
                     if (map->map[y][x - 1] == 'C')
                         map->count_tea++;
@@ -54,7 +55,8 @@ void move_d(t_map *map)
         {
             if (map->map[y][x] == 'P')
             {
-                if (x < map->width - 1 && (map->map[y][x + 1] == '0' || map->map[y][x + 1] == 'C'))
+                if (x < map->width - 1 && (map->map[y][x + 1] == '0'
+                    || map->map[y][x + 1] == 'C' || map->map[y][x + 1] == 'E'))
                 {
                     if (map->map[y][x + 1] == 'C')
                         map->count_tea++;
@@ -83,7 +85,8 @@ void move_w(t_map *map)
         {
             if (map->map[y][x] == 'P')
             {
-                if (y > 0 && (map->map[y - 1][x] == '0' || map->map[y - 1][x] == 'C'))
+                if (y > 0 && (map->map[y - 1][x] == '0'
+                    || map->map[y - 1][x] == 'C' || map->map[y - 1][x] == 'E'))
                 {
                     if (map->map[y - 1][x] == 'C')
                         map->count_tea++;
@@ -112,7 +115,8 @@ void move_s(t_map *map)
         {
             if (map->map[y][x] == 'P')
             {
-                if (y < map->height - 1 && (map->map[y + 1][x] == '0' || map->map[y + 1][x] == 'C'))
+                if (y < map->height - 1 && (map->map[y + 1][x] == '0'
+                    || map->map[y + 1][x] == 'C' || map->map[y + 1][x] == 'E'))
                 {
                     if (map->map[y + 1][x] == 'C')
                         map->count_tea++;

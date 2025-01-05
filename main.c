@@ -6,7 +6,7 @@
 /*   By: yonuma <yonuma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 17:46:56 by marvin            #+#    #+#             */
-/*   Updated: 2025/01/05 18:37:14 by yonuma           ###   ########.fr       */
+/*   Updated: 2025/01/05 19:29:17 by yonuma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	handle_keypress(int keycode, t_map *struct_map)
 {
 	static int	tmp = 0;
-	
+
 	if (keycode == XK_Escape)
 		exit(0);
 	if (keycode == XK_a)
@@ -276,7 +276,7 @@ struct texture	set_tecture(void)
 	texture.img_PC1 = "image/PC1.xpm";
 	texture.img_PC2 = "image/PC2.xpm";
 	texture.img_0 = "image/collidor.xpm";
-	texture.img_E = "image/person2.xpm";
+	texture.img_E = "image/collidor.xpm";
 	texture.img_Person1 = "image/person1.xpm";
 	texture.img_Person2 = "image/person2.xpm";
 	texture.img_tea = "image/tea.xpm";

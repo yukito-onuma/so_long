@@ -19,6 +19,7 @@
 #include <X11/keysym.h>
 #include <string.h>
 #include <stdbool.h>
+#include <unistd.h>
 #include "libmlx/mlx.h"
 
 typedef struct texture
