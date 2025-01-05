@@ -6,7 +6,7 @@
 /*   By: yonuma <yonuma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 17:46:56 by marvin            #+#    #+#             */
-/*   Updated: 2025/01/05 20:41:20 by yonuma           ###   ########.fr       */
+/*   Updated: 2025/01/05 20:49:08 by yonuma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,23 +38,24 @@ int	handle_keypress(int keycode, t_map *struct_map)
 	return (0);
 }
 
-struct texture	set_new_tecture(void) // 新しいテクスチャをセットする
-{
-	struct texture	texture;
+// アイディアだけあるテクスチャの張替え
+// struct texture	set_new_tecture(void) // 新しいテクスチャをセットする
+// {
+// 	struct texture	texture;
 
-	texture.img_window = "image/window.xpm";
-	texture.img_wall = "image/wall.xpm";
-	texture.img_PC1 = "image/PC1.xpm";
-	texture.img_PC2 = "image/PC2.xpm";
-	texture.img_0 = "image/collidor.xpm";
-	texture.img_E = "image/akamite_dot.xpm";
-	texture.img_Person1 = "image/person1.xpm";
-	texture.img_Person2 = "image/person2.xpm";
-	texture.img_tea = "image/tea.xpm";
-	texture.character = "image/character.xpm";
+// 	texture.img_window = "image/window.xpm";
+// 	texture.img_wall = "image/wall.xpm";
+// 	texture.img_PC1 = "image/PC1.xpm";
+// 	texture.img_PC2 = "image/PC2.xpm";
+// 	texture.img_0 = "image/collidor.xpm";
+// 	texture.img_E = "image/akamite_dot.xpm";
+// 	texture.img_Person1 = "image/person1.xpm";
+// 	texture.img_Person2 = "image/person2.xpm";
+// 	texture.img_tea = "image/tea.xpm";
+// 	texture.character = "image/character.xpm";
 
-	return (texture);
-}
+// 	return (texture);
+// }
 
 int	draw_map(t_map *map)
 {
@@ -71,9 +72,10 @@ int	draw_map(t_map *map)
 	void    *img_0;
 	bool    next_PC1 = true;
 	static  bool    person = true;
-	
-	if (map->goal)
-		map->texture = set_new_tecture();
+
+	// もしテクスチャを張り替えたいならここで	
+	// if (map->goal)
+	// 	map->texture = set_new_tecture();
 	// ここまとめられるだろ！
 	img_window = mlx_xpm_file_to_image(map->mlx, map->texture.img_window, &map->texture.img_width, &map->texture.img_height);
 	if (img_window == NULL)
