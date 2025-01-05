@@ -6,7 +6,7 @@
 /*   By: yonuma <yonuma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 17:46:56 by marvin            #+#    #+#             */
-/*   Updated: 2024/12/30 21:00:44 by yonuma           ###   ########.fr       */
+/*   Updated: 2025/01/05 18:37:14 by yonuma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	handle_keypress(int keycode, t_map *struct_map)
 {
+	static int	tmp = 0;
+	
 	if (keycode == XK_Escape)
 		exit(0);
 	if (keycode == XK_a)
@@ -24,22 +26,75 @@ int	handle_keypress(int keycode, t_map *struct_map)
 		move_w(struct_map);
 	if (keycode == XK_s)
 		move_s(struct_map);
+	if (tmp != struct_map->count)
+		printf("count: %d\n", struct_map->count);
+	tmp = struct_map->count;
+	if (struct_map->count_tea == struct_map->count_teas) // 歩数INT_MAX問題
+	{
+		struct_map->goal = true;
+		printf("You win!\n"); // リーク直してね
+		// exit(0);
+	}
 	return (0);
 }
 
-int	draw_map(struct map *map)
+struct texture	set_new_tecture(void) // 新しいテクスチャをセットする
+{
+	struct texture	texture;
+
+	texture.img_window = "image/window.xpm";
+	texture.img_wall = "image/wall.xpm";
+	texture.img_PC1 = "image/PC1.xpm";
+	texture.img_PC2 = "image/PC2.xpm";
+	texture.img_0 = "image/collidor.xpm";
+	texture.img_E = "image/akamite_dot.xpm";
+	texture.img_Person1 = "image/person1.xpm";
+	texture.img_Person2 = "image/person2.xpm";
+	texture.img_tea = "image/tea.xpm";
+	texture.character = "image/character.xpm";
+
+	return (texture);
+}
+
+int	draw_map(t_map *map)
 {
 	int	x;
 	int	y;
-	void	*img_1;
+	void	*img_window;
+	void	*img_wall;
+	void	*img_PC1;
+	void	*img_PC2;
 	void	*img_E;
-	void	*img_P;
-	void	*img_C;
+	void	*img_Person1;
+	void	*img_Person2;
+	void	*img_tea;
 	void    *img_0;
-
+	bool    next_PC1 = true;
+	static  bool    person = true;
+	
+	if (map->goal)
+		map->texture = set_new_tecture();
 	// ここまとめられるだろ！
-	img_1 = mlx_xpm_file_to_image(map->mlx, map->texture.img_1, &map->texture.img_width, &map->texture.img_height);
-	if (img_1 == NULL)
+	img_window = mlx_xpm_file_to_image(map->mlx, map->texture.img_window, &map->texture.img_width, &map->texture.img_height);
+	if (img_window == NULL)
+	{
+		fprintf(stderr, "Error loading image\n");
+		exit(1);
+	}
+	img_wall = mlx_xpm_file_to_image(map->mlx, map->texture.img_wall, &map->texture.img_width, &map->texture.img_height);
+	if (img_wall == NULL)
+	{
+		fprintf(stderr, "Error loading image\n");
+		exit(1);
+	}
+	img_PC1 = mlx_xpm_file_to_image(map->mlx, map->texture.img_PC1, &map->texture.img_width, &map->texture.img_height);
+	if (img_PC1 == NULL)
+	{
+		fprintf(stderr, "Error loading image\n");
+		exit(1);
+	}
+	img_PC2 = mlx_xpm_file_to_image(map->mlx, map->texture.img_PC2, &map->texture.img_width, &map->texture.img_height);
+	if (img_PC2 == NULL)
 	{
 		fprintf(stderr, "Error loading image\n");
 		exit(1);
@@ -50,14 +105,20 @@ int	draw_map(struct map *map)
 		fprintf(stderr, "Error loading image\n");
 		exit(1);
 	}
-	img_P = mlx_xpm_file_to_image(map->mlx, map->texture.img_P, &map->texture.img_width, &map->texture.img_height);
-	if (img_P == NULL)
+	img_Person1 = mlx_xpm_file_to_image(map->mlx, map->texture.img_Person1, &map->texture.img_width, &map->texture.img_height);
+	if (img_Person1 == NULL)
 	{
 		fprintf(stderr, "Error loading image\n");
 		exit(1);
 	}
-	img_C = mlx_xpm_file_to_image(map->mlx, map->texture.img_C, &map->texture.img_width, &map->texture.img_height);
-	if (img_C == NULL)
+	img_Person2 = mlx_xpm_file_to_image(map->mlx, map->texture.img_Person2, &map->texture.img_width, &map->texture.img_height);
+	if (img_Person2 == NULL)
+	{
+		fprintf(stderr, "Error loading image\n");
+		exit(1);
+	}
+	img_tea = mlx_xpm_file_to_image(map->mlx, map->texture.img_tea, &map->texture.img_width, &map->texture.img_height);
+	if (img_tea == NULL)
 	{
 		fprintf(stderr, "Error loading image\n");
 		exit(1);
@@ -75,23 +136,60 @@ int	draw_map(struct map *map)
 		while (x < map->width)
 		{
 			if (map->map[y][x] == '1')
-				mlx_put_image_to_window(map->mlx, map->win, img_1, x * map->texture.img_width , y * map->texture.img_height);
+			{
+				if (x == 0 || x == map->width - 1)
+					mlx_put_image_to_window(map->mlx, map->win, img_wall, x * map->texture.img_width , y * map->texture.img_height);
+				else if (y == 0)
+					mlx_put_image_to_window(map->mlx, map->win, img_window, x * map->texture.img_width , y * map->texture.img_height);
+				else if (y == map->height- 1)
+					mlx_put_image_to_window(map->mlx, map->win, img_PC2, x * map->texture.img_width , y * map->texture.img_height);
+				else if (y == 1)
+					mlx_put_image_to_window(map->mlx, map->win, img_PC1, x * map->texture.img_width , y * map->texture.img_height);
+				else
+				{
+					if (next_PC1)
+					{
+						mlx_put_image_to_window(map->mlx, map->win, img_PC1, x * map->texture.img_width, y * map->texture.img_height);
+						next_PC1 = false;
+					}
+					else
+					{
+						mlx_put_image_to_window(map->mlx, map->win, img_PC2, x * map->texture.img_width, y * map->texture.img_height);
+						next_PC1 = true;
+					}
+				}
+			}
 			if (map->map[y][x] == 'E')
 				mlx_put_image_to_window(map->mlx, map->win, img_E, x * map->texture.img_width, y * map->texture.img_height);
 			if (map->map[y][x] == 'P')
-				mlx_put_image_to_window(map->mlx, map->win, img_P, x * map->texture.img_width, y * map->texture.img_height);
+			{
+				if (person)
+				{
+					mlx_put_image_to_window(map->mlx, map->win, img_Person1, x * map->texture.img_width, y * map->texture.img_height);
+					person = false;
+				}
+				else
+				{
+					mlx_put_image_to_window(map->mlx, map->win, img_Person2, x * map->texture.img_width, y * map->texture.img_height);
+					person = true;
+				}
+			}
 			if (map->map[y][x] == 'C')
-				mlx_put_image_to_window(map->mlx, map->win, img_C, x * map->texture.img_width, y * map->texture.img_height);
+				mlx_put_image_to_window(map->mlx, map->win, img_tea, x * map->texture.img_width, y * map->texture.img_height);
 			if (map->map[y][x] == '0')
 				mlx_put_image_to_window(map->mlx, map->win, img_0, x * map->texture.img_width, y * map->texture.img_height);
 			x++;
 		}
 		y++;
 	}
-	mlx_destroy_image(map->mlx, img_1);
+	mlx_destroy_image(map->mlx, img_window);
+	mlx_destroy_image(map->mlx, img_wall);
+	mlx_destroy_image(map->mlx, img_PC1);
+	mlx_destroy_image(map->mlx, img_PC2);
 	mlx_destroy_image(map->mlx, img_E);
-	mlx_destroy_image(map->mlx, img_P);
-	mlx_destroy_image(map->mlx, img_C);
+	mlx_destroy_image(map->mlx, img_Person1);
+	mlx_destroy_image(map->mlx, img_Person2);
+	mlx_destroy_image(map->mlx, img_tea);
 	mlx_destroy_image(map->mlx, img_0);
 
 	return (0);
@@ -110,7 +208,6 @@ int	check_map_inclument(struct map *map_struct)
 	is_C = 0;
 	width = map_struct->width;
 	height = map_struct->height;
-	printf("%d\n", __LINE__);
 	while (height)
 	{
 		width = map_struct->width;
@@ -126,13 +223,13 @@ int	check_map_inclument(struct map *map_struct)
 		}
 		height--;
 	}
-	printf("is_E: %d, is_P: %d, is_C: %d\n", is_E, is_P, is_C);
 	if (is_E == 0 || is_P == 0 || is_C == 0)
 	{
 		fprintf(stderr, "Error: Map is invalid\n");
 		map_struct->is_invalid = 1;
 		return (-1);
 	}
+	map_struct->count_teas = is_C;
 	return (0);
 }
 
@@ -142,19 +239,28 @@ void	map_init(struct map *map_struct)
 	map_struct->width = 0;
 	map_struct->height = 0;
 	map_struct->is_invalid = 0;
+	map_struct->count = 0;
+	map_struct->count_tea = 0;
+	map_struct->count_teas = 0;
+	map_struct->goal = false;
 }
 
 void	read_map(struct map *map_struct)
 {
 	map_init(map_struct);
-	map_struct->map = (char **)malloc(sizeof(char *) * 5);
-	map_struct->map[0] = strdup("11111111"); // 仮置きのstrdup
-	map_struct->map[1] = strdup("10000001");
-	map_struct->map[2] = strdup("100EP001");
-	map_struct->map[3] = strdup("1000C001");
-	map_struct->map[4] = strdup("11111111");
-	map_struct->height = 5;
-	map_struct->width = 8;
+	map_struct->map = (char **)malloc(sizeof(char *) * 9);
+	map_struct->map[0] = strdup("11111111111111111111111"); // 仮置きのstrdup
+	map_struct->map[1] = strdup("11111111111111111111111");
+	map_struct->map[2] = strdup("1P0E000000C000000000001");
+	map_struct->map[3] = strdup("10011111111111111111001");
+	map_struct->map[4] = strdup("100000000000000000000C1");
+	map_struct->map[5] = strdup("10011111111111111111001");
+	map_struct->map[6] = strdup("10C000000000000000000C1");
+	map_struct->map[7] = strdup("10011111111111111111001");
+	map_struct->map[8] = strdup("10000000000000000000001");
+	map_struct->map[9] = strdup("11111111111111111111111");
+	map_struct->height = 10;
+	map_struct->width = 23;
 	if (check_map_inclument(map_struct) == -1)
 		map_struct->is_invalid = 1;
 	// if (check_map_structure(map_struct) == -1) // マップの構造が正しいかチェック
@@ -165,13 +271,17 @@ struct texture	set_tecture(void)
 {
 	struct texture	texture;
 
-	texture.img_1 = "image/akamite_dot.xpm";
-	texture.img_0 = "image/0.xpm";
-	texture.img_E = "image/E.xpm";
-	texture.img_P = "image/P.xpm";
-	texture.img_C = "image/C.xpm";
+	texture.img_window = "image/window.xpm";
+	texture.img_wall = "image/wall.xpm";
+	texture.img_PC1 = "image/PC1.xpm";
+	texture.img_PC2 = "image/PC2.xpm";
+	texture.img_0 = "image/collidor.xpm";
+	texture.img_E = "image/person2.xpm";
+	texture.img_Person1 = "image/person1.xpm";
+	texture.img_Person2 = "image/person2.xpm";
+	texture.img_tea = "image/tea.xpm";
 	texture.character = "image/character.xpm";
-	
+
 	return (texture);
 }
 
@@ -193,7 +303,7 @@ int	main(void)
 	void	*win;
 	int		img_width;
 	int		img_height;
-	int		win_width = 800;
+	int		win_width = 1800;
 	int		win_height = 600;
 	struct map	map_struct;
 	struct texture	texture;
@@ -210,11 +320,8 @@ int	main(void)
 		fprintf(stderr, "Error creating window\n");
 		return (1);
 	}
-	printf("%d\n", __LINE__);
 	map_struct.texture = set_tecture();
-	printf("%d\n", __LINE__);
-	read_map(&map_struct); // マップになんの要素を持たせるか検討
-	printf("%d\n", __LINE__);
+	read_map(&map_struct);
 	if (map_struct.is_invalid == 1)
 		return (print_error(&map_struct));
 	mlx_hook(map_struct.win, KeyPress, KeyPressMask, handle_keypress, &map_struct);

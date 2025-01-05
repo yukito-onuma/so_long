@@ -25,10 +25,13 @@ void move_a(t_map *map)
         {
             if (map->map[y][x] == 'P')
             {
-                if (x > 0 && map->map[y][x - 1] == '0')
+                if (x > 0 && (map->map[y][x - 1] == '0' || map->map[y][x - 1] == 'C'))
                 {
+                    if (map->map[y][x - 1] == 'C')
+                        map->count_tea++;
                     map->map[y][x - 1] = 'P';
                     map->map[y][x] = '0';
+                    map->count++;
                     return ;
                 }
             }
@@ -51,10 +54,13 @@ void move_d(t_map *map)
         {
             if (map->map[y][x] == 'P')
             {
-                if (x < map->width - 1 && map->map[y][x + 1] == '0')
+                if (x < map->width - 1 && (map->map[y][x + 1] == '0' || map->map[y][x + 1] == 'C'))
                 {
+                    if (map->map[y][x + 1] == 'C')
+                        map->count_tea++;
                     map->map[y][x + 1] = 'P';
                     map->map[y][x] = '0';
+                    map->count++;
                     return ;
                 }
             }
@@ -77,10 +83,13 @@ void move_w(t_map *map)
         {
             if (map->map[y][x] == 'P')
             {
-                if (y > 0 && map->map[y - 1][x] == '0')
+                if (y > 0 && (map->map[y - 1][x] == '0' || map->map[y - 1][x] == 'C'))
                 {
+                    if (map->map[y - 1][x] == 'C')
+                        map->count_tea++;
                     map->map[y - 1][x] = 'P';
                     map->map[y][x] = '0';
+                    map->count++;
                     return ;
                 }
             }
@@ -103,10 +112,13 @@ void move_s(t_map *map)
         {
             if (map->map[y][x] == 'P')
             {
-                if (y < map->height - 1 && map->map[y + 1][x] == '0')
+                if (y < map->height - 1 && (map->map[y + 1][x] == '0' || map->map[y + 1][x] == 'C'))
                 {
+                    if (map->map[y + 1][x] == 'C')
+                        map->count_tea++;
                     map->map[y + 1][x] = 'P';
                     map->map[y][x] = '0';
+                    map->count++;
                     return ;
                 }
             }

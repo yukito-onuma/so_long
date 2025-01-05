@@ -18,15 +18,20 @@
 #include <X11/X.h>
 #include <X11/keysym.h>
 #include <string.h>
+#include <stdbool.h>
 #include "libmlx/mlx.h"
 
 typedef struct texture
 {
     void *img_0;
-    void *img_1;
+    void *img_window;
+    void *img_wall;
+    void *img_PC1;
+    void *img_PC2;
     void *img_E;
-    void *img_P;
-    void *img_C;
+    void *img_Person1;
+    void *img_Person2;
+    void *img_tea;
     void *character;
     int width;
     int height;
@@ -42,6 +47,10 @@ typedef struct map
     int width;
     int height;
     int is_invalid;
+    int count;
+    int count_tea;
+    int count_teas;
+    bool goal;
     struct texture texture;
 } t_map;
 
