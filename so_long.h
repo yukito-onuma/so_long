@@ -51,6 +51,7 @@ typedef struct map
     int count;
     int count_tea;
     int count_teas;
+    bool is_E;
     bool goal;
     struct texture texture;
 } t_map;

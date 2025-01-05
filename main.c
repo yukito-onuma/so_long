@@ -6,7 +6,7 @@
 /*   By: yonuma <yonuma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 17:46:56 by marvin            #+#    #+#             */
-/*   Updated: 2025/01/05 19:29:17 by yonuma           ###   ########.fr       */
+/*   Updated: 2025/01/05 20:41:20 by yonuma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,18 +249,18 @@ void	read_map(struct map *map_struct)
 {
 	map_init(map_struct);
 	map_struct->map = (char **)malloc(sizeof(char *) * 9);
-	map_struct->map[0] = strdup("11111111111111111111111"); // 仮置きのstrdup
-	map_struct->map[1] = strdup("11111111111111111111111");
-	map_struct->map[2] = strdup("1P0E000000C000000000001");
-	map_struct->map[3] = strdup("10011111111111111111001");
-	map_struct->map[4] = strdup("100000000000000000000C1");
-	map_struct->map[5] = strdup("10011111111111111111001");
-	map_struct->map[6] = strdup("10C000000000000000000C1");
-	map_struct->map[7] = strdup("10011111111111111111001");
-	map_struct->map[8] = strdup("10000000000000000000001");
-	map_struct->map[9] = strdup("11111111111111111111111");
+	map_struct->map[0] = strdup("111111111111111111111111111"); // 仮置きのstrdup
+	map_struct->map[1] = strdup("111111111111111111111110001");
+	map_struct->map[2] = strdup("1P00000000C0000000000010E01");
+	map_struct->map[3] = strdup("100111111111111111110010001");
+	map_struct->map[4] = strdup("100000000000000000000C00001");
+	map_struct->map[5] = strdup("100111111111111111110000001");
+	map_struct->map[6] = strdup("10C000000000000000000C00001");
+	map_struct->map[7] = strdup("100111111111111111110010001");
+	map_struct->map[8] = strdup("100000000000000000000010001");
+	map_struct->map[9] = strdup("111111111111111111111111111");
 	map_struct->height = 10;
-	map_struct->width = 23;
+	map_struct->width = 27;
 	if (check_map_inclument(map_struct) == -1)
 		map_struct->is_invalid = 1;
 	// if (check_map_structure(map_struct) == -1) // マップの構造が正しいかチェック
@@ -276,7 +276,7 @@ struct texture	set_tecture(void)
 	texture.img_PC1 = "image/PC1.xpm";
 	texture.img_PC2 = "image/PC2.xpm";
 	texture.img_0 = "image/collidor.xpm";
-	texture.img_E = "image/collidor.xpm";
+	texture.img_E = "image/kaidan.xpm";
 	texture.img_Person1 = "image/person1.xpm";
 	texture.img_Person2 = "image/person2.xpm";
 	texture.img_tea = "image/tea.xpm";
