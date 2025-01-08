@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   bonus_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yonuma <yonuma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 17:46:56 by marvin            #+#    #+#             */
-/*   Updated: 2025/01/08 16:51:48 by yonuma           ###   ########.fr       */
+/*   Updated: 2025/01/08 16:51:37 by yonuma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,25 @@ int	handle_keypress(int keycode, t_map *struct_map)
 	return (0);
 }
 
+// アイディアだけあるテクスチャの張替え
+struct texture	set_new_tecture(void) // 新しいテクスチャをセットする
+{
+	struct texture	texture;
+
+	texture.img_window = "image/window_ura.xpm";
+	texture.img_wall = "image/wall.xpm";
+	texture.img_PC1 = "image/PC1_ura1.xpm";
+	texture.img_PC2 = "image/PC2_ura1.xpm";
+	texture.img_0 = "image/yuka_ura.xpm";
+	texture.img_E = "image/akamite_dot.xpm";
+	texture.img_Person1 = "image/Person1_ura.xpm";
+	texture.img_Person2 = "image/hito2_ura.xpm";
+	texture.img_tea = "image/tea.xpm";
+	texture.character = "image/character.xpm";
+
+	return (texture);
+}
+
 int	draw_map(t_map *map)
 {
 	int	x;
@@ -54,6 +73,9 @@ int	draw_map(t_map *map)
 	bool    next_PC1 = true;
 	static  bool    person = true;
 
+	// もしテクスチャを張り替えたいならここで	
+	if (map->goal)
+		map->texture = set_new_tecture();
 	// ここまとめられるだろ！
 	img_window = mlx_xpm_file_to_image(map->mlx, map->texture.img_window, &map->texture.img_width, &map->texture.img_height);
 	if (img_window == NULL)
