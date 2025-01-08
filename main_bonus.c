@@ -1,16 +1,142 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bonus_main.c                                       :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yonuma <yonuma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 17:46:56 by marvin            #+#    #+#             */
-/*   Updated: 2025/01/08 16:51:37 by yonuma           ###   ########.fr       */
+/*   Updated: 2025/01/08 20:30:52 by yonuma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+void	search_player(t_map *map, int *x_position, int *y_position)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < map->height)
+	{
+		x = 0;
+		while (x < map->width)
+		{
+			if (map->map[y][x] == 'P')
+			{
+				*x_position = x;
+				*y_position = y;
+				return;
+			}
+			x++;
+		}
+		y++;
+	}
+}
+
+void	move_enemy(t_map *map)
+{
+	int	x;
+	int y;
+	int x_position = -1;
+	int y_position = -1;
+	int dx;
+	int dy;
+
+	search_player(map, &x_position, &y_position);
+
+	if (x_position == -1 || y_position == -1)
+		return;
+
+	y = 0;
+	while (y < map->height)
+	{
+		x = 0;
+		while (x < map->width)
+		{
+			if (map->map[y][x] == 'N')
+			{
+				dx = x_position - x;
+				dy = y_position - y;
+
+				if (abs(dx) > abs(dy))
+				{
+					if (dx > 0 && map->map[y][x + 1] == '0')
+					{
+						map->map[y][x] = '0';
+						map->map[y][x + 1] = 'N';
+					}
+					else if (dx < 0 && map->map[y][x - 1] == '0')
+					{
+						map->map[y][x] = '0';
+						map->map[y][x - 1] = 'N';
+					}
+				}
+				else
+				{
+					if (dy > 0 && map->map[y + 1][x] == '0')
+					{
+						map->map[y][x] = '0';
+						map->map[y + 1][x] = 'N';
+					}
+					else if (dy < 0 && map->map[y - 1][x] == '0')
+					{
+						map->map[y][x] = '0';
+						map->map[y - 1][x] = 'N';
+					}
+				}
+			}
+			x++;
+		}
+		y++;
+	}
+}
+
+void	make_enemy(struct map *map)
+{
+	int	x;
+	int	y;
+	static bool	is_enemy = false;
+
+	y = 0;
+	while (y < map->height && !is_enemy)
+	{
+		x = 0;
+		while (x < map->width)
+		{
+			if (map->map[y][x] == 'E')
+			{
+				if (map->map[y][x + 1] == '0')
+				{
+					map->map[y][x + 1] = 'N';
+					is_enemy = true;
+					break ;
+				}
+				else if (map->map[y][x - 1] == '0')
+				{
+					map->map[y][x - 1] = 'N';
+					is_enemy = true;
+					break ;
+				}
+				else if (map->map[y + 1][x] == '0')
+				{
+					map->map[y + 1][x] = 'N';
+					is_enemy = true;
+					break ;
+				}
+				else if (map->map[y - 1][x] == '0')
+				{
+					map->map[y - 1][x] = 'N';
+					is_enemy = true;
+					break ;
+				}
+			}
+			x++;
+		}
+		y++;
+	}
+}
 
 int	handle_keypress(int keycode, t_map *struct_map)
 {
@@ -32,14 +158,12 @@ int	handle_keypress(int keycode, t_map *struct_map)
 	if (struct_map->count_tea == struct_map->count_teas) // 歩数INT_MAX問題
 	{
 		struct_map->goal = true;
-		printf("You win!\n"); // リーク直してね
-		// exit(0);
+		make_enemy(struct_map);
 	}
 	return (0);
 }
 
-// アイディアだけあるテクスチャの張替え
-struct texture	set_new_tecture(void) // 新しいテクスチャをセットする
+struct texture	set_new_tecture(void)
 {
 	struct texture	texture;
 
@@ -48,10 +172,11 @@ struct texture	set_new_tecture(void) // 新しいテクスチャをセットす�
 	texture.img_PC1 = "image/PC1_ura1.xpm";
 	texture.img_PC2 = "image/PC2_ura1.xpm";
 	texture.img_0 = "image/yuka_ura.xpm";
-	texture.img_E = "image/akamite_dot.xpm";
+	texture.img_E = "image/kaidan.xpm";
 	texture.img_Person1 = "image/Person1_ura.xpm";
 	texture.img_Person2 = "image/hito2_ura.xpm";
 	texture.img_tea = "image/tea.xpm";
+	texture.enemy = "image/akamite_dot.xpm";
 	texture.character = "image/character.xpm";
 
 	return (texture);
@@ -70,10 +195,10 @@ int	draw_map(t_map *map)
 	void	*img_Person2;
 	void	*img_tea;
 	void    *img_0;
+	void	*img_enemy;
 	bool    next_PC1 = true;
 	static  bool    person = true;
 
-	// もしテクスチャを張り替えたいならここで	
 	if (map->goal)
 		map->texture = set_new_tecture();
 	// ここまとめられるだろ！
@@ -131,6 +256,12 @@ int	draw_map(t_map *map)
 		fprintf(stderr, "Error loading image\n");
 		exit(1);
 	}
+	img_enemy = mlx_xpm_file_to_image(map->mlx, map->texture.enemy, &map->texture.img_width, &map->texture.img_height);
+	if (img_enemy == NULL)
+	{
+		fprintf(stderr, "Error loading image\n");
+		exit(1);
+	}
 	y = 0;
 	while (y < map->height)
 	{
@@ -181,6 +312,8 @@ int	draw_map(t_map *map)
 			if (map->map[y][x] == '0')
 				mlx_put_image_to_window(map->mlx, map->win, img_0, x * map->texture.img_width, y * map->texture.img_height);
 			x++;
+			if (map->map[y][x] == 'N')
+				mlx_put_image_to_window(map->mlx, map->win, img_enemy, x * map->texture.img_width, y * map->texture.img_height);
 		}
 		y++;
 	}
@@ -192,6 +325,7 @@ int	draw_map(t_map *map)
 	mlx_destroy_image(map->mlx, img_Person1);
 	mlx_destroy_image(map->mlx, img_Person2);
 	mlx_destroy_image(map->mlx, img_tea);
+	mlx_destroy_image(map->mlx, img_enemy);
 	mlx_destroy_image(map->mlx, img_0);
 
 	return (0);
@@ -282,6 +416,7 @@ struct texture	set_tecture(void)
 	texture.img_Person1 = "image/person1.xpm";
 	texture.img_Person2 = "image/person2.xpm";
 	texture.img_tea = "image/tea.xpm";
+	texture.enemy = "image/akamite_dot.xpm";
 	texture.character = "image/character.xpm";
 
 	return (texture);
@@ -316,7 +451,7 @@ int	main(void)
 		fprintf(stderr, "Error initializing MLX\n");
 		return (1);
 	}
-	map_struct.win = mlx_new_window(map_struct.mlx, win_width, win_height, "Display Image");
+	map_struct.win = mlx_new_window(map_struct.mlx, win_width, win_height, "so_long");
 	if (map_struct.win == NULL)
 	{
 		fprintf(stderr, "Error creating window\n");

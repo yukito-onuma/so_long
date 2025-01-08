@@ -33,6 +33,7 @@ typedef struct texture
     void *img_Person1;
     void *img_Person2;
     void *img_tea;
+    void *enemy;
     void *character;
     int width;
     int height;
