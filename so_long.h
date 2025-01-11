@@ -18,7 +18,9 @@
 #include <X11/X.h>
 #include <X11/keysym.h>
 #include <string.h>
+#include <stdlib.h>
 #include <stdbool.h>
+#include <time.h>
 #include <unistd.h>
 #include "libmlx/mlx.h"
 
@@ -52,15 +54,37 @@ typedef struct map
     int count;
     int count_tea;
     int count_teas;
+    int player_x;
+    int player_y;
+    bool is_jumping;
+    double jump_velocity;
+    double jump_time; 
     bool is_E;
     bool goal;
     struct texture texture;
 } t_map;
+
+// texture
+struct texture set_new_texture(void);
+struct texture set_texture(void);
 
 // move
 void    move_a(struct map *map);
 void    move_d(struct map *map);
 void    move_w(struct map *map);
 void    move_s(struct map *map);
+
+// move_bonus
+void    move_a_bonus(struct map *map);
+void    move_d_bonus(struct map *map);
+void    move_w_bonus(struct map *map);
+void    move_s_bonus(struct map *map);
+
+// map_check_init
+int     check_map_inclument(struct map *map_struct);
+void    map_init(struct map *map_struct);
+
+// draw_map
+int     draw_map(struct map *map);
 
 #endif

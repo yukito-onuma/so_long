@@ -6,16 +6,24 @@
 #    By: yonuma <yonuma@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/01 14:19:47 by yonuma            #+#    #+#              #
-#    Updated: 2025/01/08 20:29:08 by yonuma           ###   ########.fr        #
+#    Updated: 2025/01/11 18:23:48 by yonuma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	minilibx_test
 NAME_BONUS	=	minilibx_test_bonus
 SRCS		=	main.c \
-				move.c 
-SRCS_BONUS	=	main_bonus.c \
+				texture.c \
+				draw_map.c \
+				map_check_init.c \
 				move.c
+				
+SRCS_BONUS	=	main_bonus.c \
+				texture.c \
+				draw_map.c \
+				map_check_init.c \
+				move.c
+				
 OBJS 		=	$(SRCS:.c=.o)
 OBJS_BONUS	=	$(SRCS_BONUS:.c=.o)
 CC			=	cc
