@@ -6,7 +6,7 @@
 /*   By: yonuma <yonuma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:10:04 by yonuma            #+#    #+#             */
-/*   Updated: 2025/01/11 17:54:50 by yonuma           ###   ########.fr       */
+/*   Updated: 2025/01/13 18:52:18 by yonuma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ struct texture	set_new_texture(void)
 	texture.img_Person1 = "image/Person1_ura.xpm";
 	texture.img_Person2 = "image/hito2_ura.xpm";
 	texture.img_tea = "image/tea.xpm";
+	texture.object = "image/object.xpm";
 	texture.enemy = "image/akamite_dot.xpm";
 	texture.character = "image/character.xpm";
 
@@ -44,6 +45,7 @@ struct texture	set_texture(void)
 	texture.img_Person1 = "image/person1.xpm";
 	texture.img_Person2 = "image/person2.xpm";
 	texture.img_tea = "image/tea.xpm";
+	texture.object = "image/object.xpm";
 	texture.enemy = "image/akamite_dot.xpm";
 	texture.character = "image/character.xpm";
 

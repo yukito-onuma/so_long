@@ -6,7 +6,7 @@
 #    By: yonuma <yonuma@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/01 14:19:47 by yonuma            #+#    #+#              #
-#    Updated: 2025/01/11 18:23:48 by yonuma           ###   ########.fr        #
+#    Updated: 2025/01/13 14:12:55 by yonuma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ SRCS		=	main.c \
 				map_check_init.c \
 				move.c
 				
-SRCS_BONUS	=	main_bonus.c \
+SRCS_BONUS	=	bonus/main_bonus.c \
+				bonus/move_bonus.c \
 				texture.c \
 				draw_map.c \
 				map_check_init.c \

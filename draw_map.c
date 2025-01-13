@@ -6,7 +6,7 @@
 /*   By: yonuma <yonuma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 17:42:36 by yonuma            #+#    #+#             */
-/*   Updated: 2025/01/11 19:55:23 by yonuma           ###   ########.fr       */
+/*   Updated: 2025/01/13 20:58:59 by yonuma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,13 @@ int	draw_map(t_map *map)
 	void	*img_Person2;
 	void	*img_tea;
 	void    *img_0;
+	void    *img_enemy;
+	void	*img_object;
 	bool    next_PC1 = true;
 	static  bool    person = true;
 
 	// ここまとめられるだろ！
-	if (!map->goal)
+	if (!map->goal1)
 		map->texture = set_texture();
 	else
 		map->texture = set_new_texture();
@@ -87,6 +89,18 @@ int	draw_map(t_map *map)
 		fprintf(stderr, "Error loading image\n");
 		exit(1);
 	}
+	img_object = mlx_xpm_file_to_image(map->mlx, map->texture.object, &map->texture.img_width, &map->texture.img_height);
+	if (img_object == NULL)
+	{
+		fprintf(stderr, "Error loading image\n");
+		exit(1);
+	}
+	img_enemy = mlx_xpm_file_to_image(map->mlx, map->texture.enemy, &map->texture.img_width, &map->texture.img_height);
+	if (img_enemy == NULL)
+	{
+		fprintf(stderr, "Error loading image\n");
+		exit(1);
+	}
 	y = 0;
 	while (y < map->height)
 	{
@@ -136,7 +150,11 @@ int	draw_map(t_map *map)
 				mlx_put_image_to_window(map->mlx, map->win, img_tea, x * map->texture.img_width, y * map->texture.img_height);
 			if (map->map[y][x] == '0')
 				mlx_put_image_to_window(map->mlx, map->win, img_0, x * map->texture.img_width, y * map->texture.img_height);
+			if (map->map[y][x] == 'O')
+				mlx_put_image_to_window(map->mlx, map->win, img_object, x * map->texture.img_width, y * map->texture.img_height);
 			x++;
+			if (map->map[y][x] == 'N')
+				mlx_put_image_to_window(map->mlx, map->win, img_enemy, x * map->texture.img_width, y * map->texture.img_height);
 		}
 		y++;
 	}

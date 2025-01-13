@@ -6,7 +6,7 @@
 /*   By: yonuma <yonuma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 15:54:11 by yonuma            #+#    #+#             */
-/*   Updated: 2025/01/11 18:20:50 by yonuma           ###   ########.fr       */
+/*   Updated: 2025/01/13 21:00:29 by yonuma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,6 @@ void	map_init(struct map *map_struct)
 	map_struct->count = 0;
 	map_struct->count_tea = 0;
 	map_struct->count_teas = 0;
-	map_struct->goal = false;
+	map_struct->goal1 = false;
+	map_struct->goal2 = false;
 }

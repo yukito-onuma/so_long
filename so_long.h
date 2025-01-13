@@ -37,6 +37,7 @@ typedef struct texture
     void *img_tea;
     void *enemy;
     void *character;
+    void *object;
     int width;
     int height;
     int img_width;
@@ -57,10 +58,12 @@ typedef struct map
     int player_x;
     int player_y;
     bool is_jumping;
+    bool is_falling;
     double jump_velocity;
     double jump_time; 
     bool is_E;
-    bool goal;
+    bool goal1;
+    bool goal2;
     struct texture texture;
 } t_map;
 
@@ -79,6 +82,7 @@ void    move_a_bonus(struct map *map);
 void    move_d_bonus(struct map *map);
 void    move_w_bonus(struct map *map);
 void    move_s_bonus(struct map *map);
+void    set_obstacle(struct map *map);
 
 // map_check_init
 int     check_map_inclument(struct map *map_struct);
@@ -86,5 +90,8 @@ void    map_init(struct map *map_struct);
 
 // draw_map
 int     draw_map(struct map *map);
+
+//utils
+void    search_player(struct map *map, int *x, int *y);
 
 #endif

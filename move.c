@@ -38,9 +38,11 @@ void find_player(t_map *map)
 void move_a(t_map *map)
 {
     find_player(map);
-    int x = map->player_x;
-    int y = map->player_y;
+    int x;
+    int y;
 
+    x = map->player_x;
+    y = map->player_y;
     if (x > 0 && (map->map[y][x - 1] == '0' || map->map[y][x - 1] == 'C'))
     {
         if (map->map[y][x - 1] == 'C')
@@ -55,9 +57,11 @@ void move_a(t_map *map)
 void move_d(t_map *map)
 {
     find_player(map);
-    int x = map->player_x;
-    int y = map->player_y;
+    int x;
+    int y;
 
+    x = map->player_x;
+    y = map->player_y;
     if (x < map->width - 1 && (map->map[y][x + 1] == '0' || map->map[y][x + 1] == 'C'))
     {
         if (map->map[y][x + 1] == 'C')
@@ -72,9 +76,11 @@ void move_d(t_map *map)
 void    move_w(t_map *map)
 {
     find_player(map);
-    int x = map->player_x;
-    int y = map->player_y;
+    int x;
+    int y;
 
+    x = map->player_x;
+    y = map->player_y;
     if (y > 0 && (map->map[y - 1][x] == '0' || map->map[y - 1][x] == 'C'))
     {
         if (map->map[y - 1][x] == 'C')
@@ -86,22 +92,14 @@ void    move_w(t_map *map)
     }
 }
 
-void move_w_bonus(t_map *map)
-{
-    if (!map->is_jumping) // ジャンプ中でなければジャンプ開始
-    {
-        map->is_jumping = true;
-        map->jump_velocity = 5.0; // ジャンプ初速度（調整可能）
-        map->jump_time = 0;
-    }
-}
-
 void move_s(t_map *map)
 {
     find_player(map);
-    int x = map->player_x;
-    int y = map->player_y;
+    int x;
+    int y;
 
+    x = map->player_x;
+    y = map->player_y;
     if (y < map->height - 1 && (map->map[y + 1][x] == '0' || map->map[y + 1][x] == 'C'))
     {
         if (map->map[y + 1][x] == 'C')
