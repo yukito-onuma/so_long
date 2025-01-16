@@ -70,6 +70,7 @@ typedef struct map
 // texture
 struct texture set_new_texture(void);
 struct texture set_texture(void);
+struct texture next_stage_texture(void);
 
 // move
 void    move_a(struct map *map);
@@ -93,5 +94,16 @@ int     draw_map(struct map *map);
 
 //utils
 void    search_player(struct map *map, int *x, int *y);
+
+// read_map
+void    read_map(struct map *map_struct);
+
+// enemy
+void    set_ememy(struct map *map);
+int     enemy(struct map *map);
+void    game_over(struct map *map);
+
+// load_new_map
+void    load_new_map(struct map *map_struct);
 
 #endif

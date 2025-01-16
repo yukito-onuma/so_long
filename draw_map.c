@@ -6,7 +6,7 @@
 /*   By: yonuma <yonuma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 17:42:36 by yonuma            #+#    #+#             */
-/*   Updated: 2025/01/13 20:58:59 by yonuma           ###   ########.fr       */
+/*   Updated: 2025/01/16 18:41:22 by yonuma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,20 @@ int	draw_map(t_map *map)
 	void	*img_object;
 	bool    next_PC1 = true;
 	static  bool    person = true;
+	static  bool    new = false;
 
 	// ここまとめられるだろ！
 	if (!map->goal1)
 		map->texture = set_texture();
-	else
+	else if (map->goal1 && !map->goal2)
 		map->texture = set_new_texture();
+	else if (map->goal2 && map->goal1 && !new)
+	{
+		map->texture = next_stage_texture();
+		load_new_map(map);
+		new = true;
+		// 前のマップ消す
+	}
 	img_window = mlx_xpm_file_to_image(map->mlx, map->texture.img_window, &map->texture.img_width, &map->texture.img_height);
 	if (img_window == NULL)
 	{

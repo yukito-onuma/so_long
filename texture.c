@@ -6,11 +6,31 @@
 /*   By: yonuma <yonuma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:10:04 by yonuma            #+#    #+#             */
-/*   Updated: 2025/01/13 18:52:18 by yonuma           ###   ########.fr       */
+/*   Updated: 2025/01/16 16:48:03 by yonuma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "so_long.h"
+
+struct texture	next_stage_texture(void)
+{
+	struct texture	texture;
+
+	texture.img_window = "image/window_ura.xpm";
+	texture.img_wall = "image/wall.xpm";
+	texture.img_PC1 = "image/ground.xpm";
+	texture.img_PC2 = "image/ground.xpm";
+	texture.img_0 = "image/yuka_ura.xpm";
+	texture.img_E = "image/kaidan.xpm";
+	texture.img_Person1 = "image/Person1_ura.xpm";
+	texture.img_Person2 = "image/hito2_ura.xpm";
+	texture.img_tea = "image/tea.xpm";
+	texture.object = "image/object.xpm";
+	texture.enemy = "image/akamite_dot.xpm";
+	texture.character = "image/character.xpm";
+
+	return (texture);
+}
 
 struct texture	set_new_texture(void)
 {
