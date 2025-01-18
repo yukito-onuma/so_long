@@ -6,7 +6,7 @@
 /*   By: yonuma <yonuma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/16 15:49:04 by yonuma            #+#    #+#             */
-/*   Updated: 2025/01/16 18:51:14 by yonuma           ###   ########.fr       */
+/*   Updated: 2025/01/18 12:50:18 by yonuma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int	enemy(t_map *map)
 	static int	count = 0;
 
 	count++;
-	printf("count: %d\n", count); // printf
 	if (map->goal1 && count == 1)
 	{
 		search_player(map, &x, &y);

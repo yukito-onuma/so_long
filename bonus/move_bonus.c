@@ -6,7 +6,7 @@
 /*   By: yonuma <yonuma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 14:57:26 by yonuma            #+#    #+#             */
-/*   Updated: 2025/01/16 18:17:07 by yonuma           ###   ########.fr       */
+/*   Updated: 2025/01/18 13:34:49 by yonuma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,12 @@ void	move_w_0(t_map *map, int *x, int *y, int *jump)
 
 void	move_w_O(t_map *map, int *x, int *y, int *jump)
 {
-	if (map->map[*y - 2][*x] == '0')
+	if (map->map[*y - 2][*x] == '1')
+	{
+		*jump = 0;
+		return ;
+	}
+	else
 	{
 		map->map[*y - 2][*x] = 'P';
 		map->map[*y][*x] = '0';
