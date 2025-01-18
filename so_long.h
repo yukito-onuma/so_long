@@ -64,6 +64,7 @@ typedef struct map
     bool is_E;
     bool goal1;
     bool goal2;
+    bool goal3;
     struct texture texture;
 } t_map;
 

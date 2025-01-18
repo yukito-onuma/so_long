@@ -6,7 +6,7 @@
 /*   By: yonuma <yonuma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 17:46:56 by marvin            #+#    #+#             */
-/*   Updated: 2025/01/18 14:11:02 by yonuma           ###   ########.fr       */
+/*   Updated: 2025/01/18 14:54:40 by yonuma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,13 @@ void	move_bonus(int keycode, t_map *struct_map)
 	if (keycode == XK_Escape)
 		exit(0);
 	if (keycode == XK_a)
-		move_a(struct_map);
+		move_a_bonus(struct_map);
 	if (keycode == XK_d)
-		move_d(struct_map);
+		move_d_bonus(struct_map);
 	if (keycode == XK_w)
 		move_w_bonus(struct_map);
 	if (keycode == XK_s)
-		move_s(struct_map);
+		move_s_bonus(struct_map);
 	if (keycode == XK_space)
 		set_obstacle(struct_map);
 	if (prev_count != struct_map->count)

@@ -6,7 +6,7 @@
 /*   By: yonuma <yonuma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 14:57:26 by yonuma            #+#    #+#             */
-/*   Updated: 2025/01/18 13:34:49 by yonuma           ###   ########.fr       */
+/*   Updated: 2025/01/18 16:10:19 by yonuma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,13 @@ void	move_a_bonus(t_map *map)
 	search_player(map, &x, &y);
 	if (x > 0 && (map->map[y][x - 1] == '0' || map->map[y][x - 1] == 'C'))
 	{
-		if (map->map[y][x - 1] == 'C')
+		if (map->map[y][x - 1] == 'C' || map->map[y][x - 1] == 'O')
 			map->count_tea++;
+		if (map->map[y][x - 1] == 'E')
+		{
+			printf("GOAL!!\nresult: %d\n", map->count);
+			exit(0);
+		}
 		map->map[y][x - 1] = 'P';
 		map->map[y][x] = '0';
 		map->count++;
@@ -40,8 +45,13 @@ void	move_d_bonus(t_map *map)
 	search_player(map, &x, &y);
 	if (x < map->width - 1 && (map->map[y][x + 1] == '0' || map->map[y][x + 1] == 'C'))
 	{
-		if (map->map[y][x + 1] == 'C')
+		if (map->map[y][x + 1] == 'C' || map->map[y][x + 1] == 'O')
 			map->count_tea++;
+		if (map->map[y][x + 1] == 'E')
+		{
+			printf("GOAL!!\nresult: %d\n", map->count);
+			exit(0);
+		}
 		map->map[y][x + 1] = 'P';
 		map->map[y][x] = '0';
 		map->count++;
@@ -50,6 +60,10 @@ void	move_d_bonus(t_map *map)
 
 void	move_w_0(t_map *map, int *x, int *y, int *jump)
 {
+	if (*y - 1 < 0 || map->map[*y - 1][*x] == '1')
+		*jump = 0;
+	if (map->map[*y - 1][*x] == 'E')
+		map->goal3 = true;
 	map->map[*y - 1][*x] = 'P';
 	map->map[*y][*x] = '0';
 	*y = *y - 1;
@@ -58,13 +72,15 @@ void	move_w_0(t_map *map, int *x, int *y, int *jump)
 
 void	move_w_O(t_map *map, int *x, int *y, int *jump)
 {
-	if (map->map[*y - 2][*x] == '1')
+	if (*y - 2 < 0 || map->map[*y - 2][*x] == '1')
 	{
 		*jump = 0;
 		return ;
 	}
 	else
 	{
+		if (map->map[*y - 2][*x] == 'E')
+			map->goal3 = true;
 		map->map[*y - 2][*x] = 'P';
 		map->map[*y][*x] = '0';
 		*y = *y - 2;
@@ -85,7 +101,16 @@ void	move_w_bonus(t_map *map)
 	search_player(map, &x, &y);
 	while (jump > 0)
 	{
-		if (y > 0 && (map->map[y - 1][x] == '0' || map->map[y - 1][x] == 'O'))
+		if (map->map[y - 1][x] == '1')
+			jump = 0;
+		if (map->map[y - (3 - jump)][x] == 'E')
+		{
+			map->goal3 = true; // map 消しておいて
+			printf("GOAL!!\nresult: %d\n", map->count);
+			exit(0);
+		}
+		if (y > 0 && (map->map[y - 1][x] == '0' ||
+			map->map[y - 1][x] == 'O' || map->map[y - 1][x] == 'E'))
 		{
 			if (map->map[y - 1][x] == 'O')
 				move_w_O(map, &x, &y, &jump);
