@@ -6,7 +6,7 @@
 /*   By: yonuma <yonuma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 16:10:04 by yonuma            #+#    #+#             */
-/*   Updated: 2025/01/18 13:13:55 by yonuma           ###   ########.fr       */
+/*   Updated: 2025/01/25 16:23:04 by yonuma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ struct texture	next_stage_texture(void)
 	texture.img_E = "image/kaidan.xpm";
 	texture.img_Person1 = "image/hito_soto.xpm";
 	texture.img_Person2 = "image/hito_soto2.xpm";
-	texture.img_tea = "image/tea.xpm";
+	texture.img_tea = "image/tea_soto.xpm";
 	texture.object = "image/hashigo_1_.xpm";
 	texture.enemy = "image/akamite_dot.xpm";
 	texture.character = "image/character.xpm";

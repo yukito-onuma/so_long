@@ -6,7 +6,7 @@
 /*   By: yonuma <yonuma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 14:57:26 by yonuma            #+#    #+#             */
-/*   Updated: 2025/01/24 16:38:42 by yonuma           ###   ########.fr       */
+/*   Updated: 2025/01/25 16:41:15 by yonuma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ void	move_w_0(t_map *map, int *x, int *y, int *jump)
 		printf("GOAL!!\nresult: %d\n", map->count);
 		exit(0);
 	}
+	if (map->map[*y - 1][*x] == 'C')
+		map->map[*y - 1][*x] = '0';
 	map->map[*y - 1][*x] = 'P';
 	map->map[*y][*x] = '0';
 	*y = *y - 1;
@@ -85,6 +87,8 @@ void	move_w_O(t_map *map, int *x, int *y, int *jump)
 	{
 		if (map->map[*y - 2][*x] == 'E')
 			map->goal3 = true;
+		if (map->map[*y - 2][*x] == 'C')
+			map->map[*y - 2][*x] = '0';
 		map->map[*y - 2][*x] = 'P';
 		map->map[*y][*x] = '0';
 		*y = *y - 2;
@@ -114,7 +118,7 @@ void	move_w_bonus(t_map *map)
 			exit(0);
 		}
 		if (y > 0 && (map->map[y - 1][x] == '0' ||
-			map->map[y - 1][x] == 'O' || map->map[y - 1][x] == 'E'))
+			map->map[y - 1][x] == 'O' || map->map[y - 1][x] == 'E' || map->map[y - 1][x] == 'C'))
 		{
 			if (map->map[y - 1][x] == 'O')
 				move_w_O(map, &x, &y, &jump);

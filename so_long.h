@@ -22,6 +22,8 @@
 #include <stdbool.h>
 #include <time.h>
 #include <unistd.h>
+#include <fcntl.h>
+#include <unistd.h>
 #include "libmlx/mlx.h"
 
 typedef struct texture
@@ -52,6 +54,7 @@ typedef struct map
     int width;
     int height;
     int is_invalid;
+    int map_height;
     int count;
     int count_tea;
     int count_teas;
@@ -75,6 +78,11 @@ struct texture next_stage_texture(void);
 
 //libft
 void    itoa(int num, char *str);
+char    *ft_strdup(const char *s1);
+char    *ft_strchr(const char *s, int c);
+int     ft_strlen(const char *s);
+int     ft_strcmp(const char *s1, const char *s2);
+int     ft_strncmp(const char *s1, const char *s2, size_t n);
 
 // move
 void    move_a(struct map *map);
@@ -100,7 +108,7 @@ int     draw_map(struct map *map);
 void    search_player(struct map *map, int *x, int *y);
 
 // read_map
-void    read_map(struct map *map_struct);
+int     read_map(struct map *map, char *filename);
 
 // enemy
 void    set_ememy(struct map *map);
@@ -109,5 +117,8 @@ void    game_over(struct map *map);
 
 // load_new_map
 void    load_new_map(struct map *map_struct);
+
+// gnl
+char	*get_next_line(int fd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: yonuma <yonuma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 17:46:56 by marvin            #+#    #+#             */
-/*   Updated: 2025/01/24 17:46:35 by yonuma           ###   ########.fr       */
+/*   Updated: 2025/01/25 21:28:28 by yonuma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ int	loop_hook(t_map *map)
 	return (0);
 }
 
-int	main(void)
+int	main(int argc, char **argv)
 {
 	void			*mlx;
 	void			*win;
@@ -155,7 +155,7 @@ int	main(void)
 
 	set_mlx_win(&map_struct);
 	map_init(&map_struct);
-	read_map(&map_struct);
+	read_map(&map_struct, argv[1]);
 	if (map_struct.is_invalid == 1)
 		return (1); // error書いといて
 	draw_map(&map_struct);

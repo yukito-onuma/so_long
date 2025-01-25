@@ -6,7 +6,7 @@
 #    By: yonuma <yonuma@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/05/01 14:19:47 by yonuma            #+#    #+#              #
-#    Updated: 2025/01/24 17:18:42 by yonuma           ###   ########.fr        #
+#    Updated: 2025/01/25 16:52:14 by yonuma           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,8 @@ SRCS		=	main.c \
 				draw_map.c \
 				map_check_init.c \
 				move.c \
+				gnl/get_next_line.c \
+				gnl/get_next_line_utils.c \
 				itoa.c
 				
 SRCS_BONUS	=	bonus/main_bonus.c \
@@ -27,6 +29,8 @@ SRCS_BONUS	=	bonus/main_bonus.c \
 				bonus/load_new_map.c \
 				bonus/enemy.c \
 				map_check_init.c \
+				gnl/get_next_line.c \
+				gnl/get_next_line_utils.c \
 				itoa.c \
 				move.c
 
