@@ -73,6 +73,9 @@ struct texture set_new_texture(void);
 struct texture set_texture(void);
 struct texture next_stage_texture(void);
 
+//libft
+void    itoa(int num, char *str);
+
 // move
 void    move_a(struct map *map);
 void    move_d(struct map *map);

@@ -6,7 +6,7 @@
 /*   By: yonuma <yonuma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 17:42:36 by yonuma            #+#    #+#             */
-/*   Updated: 2025/01/16 18:41:22 by yonuma           ###   ########.fr       */
+/*   Updated: 2025/01/25 15:59:32 by yonuma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,20 @@ int	draw_map(t_map *map)
 				mlx_put_image_to_window(map->mlx, map->win, img_enemy, x * map->texture.img_width, y * map->texture.img_height);
 		}
 		y++;
+	}
+	char step_count[50];
+	itoa(map->count, step_count);
+	int dx = 0;
+	while (dx <= 1)
+	{
+		int dy = 0;
+		while (dy <= 1)
+		{
+			mlx_string_put(map->mlx, map->win, 10 + dx, 10 + dy, 0xff1493, "count: ");
+			mlx_string_put(map->mlx, map->win, 100 + dx, 10 + dy, 0xff1493, step_count);
+			dy++;
+		}
+		dx++;
 	}
 	mlx_destroy_image(map->mlx, img_window);
 	mlx_destroy_image(map->mlx, img_wall);

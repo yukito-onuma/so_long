@@ -6,7 +6,7 @@
 /*   By: yonuma <yonuma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/11 14:57:26 by yonuma            #+#    #+#             */
-/*   Updated: 2025/01/18 16:10:19 by yonuma           ###   ########.fr       */
+/*   Updated: 2025/01/24 16:38:42 by yonuma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ void	move_d_bonus(t_map *map)
 	if (map->is_jumping)
 		return ;
 	search_player(map, &x, &y);
-	if (x < map->width - 1 && (map->map[y][x + 1] == '0' || map->map[y][x + 1] == 'C'))
+	if (x < map->width - 1 && (map->map[y][x + 1] == '0' ||
+		map->map[y][x + 1] == 'C'))
 	{
 		if (map->map[y][x + 1] == 'C' || map->map[y][x + 1] == 'O')
 			map->count_tea++;
@@ -63,7 +64,10 @@ void	move_w_0(t_map *map, int *x, int *y, int *jump)
 	if (*y - 1 < 0 || map->map[*y - 1][*x] == '1')
 		*jump = 0;
 	if (map->map[*y - 1][*x] == 'E')
-		map->goal3 = true;
+	{
+		printf("GOAL!!\nresult: %d\n", map->count);
+		exit(0);
+	}
 	map->map[*y - 1][*x] = 'P';
 	map->map[*y][*x] = '0';
 	*y = *y - 1;

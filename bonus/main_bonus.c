@@ -6,7 +6,7 @@
 /*   By: yonuma <yonuma@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 17:46:56 by marvin            #+#    #+#             */
-/*   Updated: 2025/01/18 14:54:40 by yonuma           ###   ########.fr       */
+/*   Updated: 2025/01/24 17:46:35 by yonuma           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,11 +117,16 @@ int	apply_gravity(t_map *map)
 	if (map->goal2)
 	{
 		usleep(50000);
-		if (map->map[y + 1][x] == '1' || map->map[y + 1][x] == 'O'
-			|| map->map[y + 1][x] == 'E')
+		if (map->map[y + 1][x] == '1' || map->map[y + 1][x] == 'O')
 		{
 			map->is_falling = false;
 			return (0);
+		}
+		if (map->map[y + 1][x] == 'E')
+		{
+			map->goal3 = true;
+			printf("GOAL!!\nresult: %d\n", map->count);
+			exit(0);
 		}
 		map->is_falling = true;
 		if (map->map[y][x] == 'P' && map->map[y + 1][x] == '0')
